@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "express": "nodemon ./express-server/index.js",
     "start": "nodemon ./node-server/index.js",
     "build": "webpack -w"
   },
