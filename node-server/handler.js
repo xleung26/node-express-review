@@ -43,13 +43,26 @@ const routes = {
   },
   "/api/todoList": {
     GET: (req, res) => {
-      console.log("IN GET");
+      const query = url.parse(req.url, true).query; //parseQueryString <boolean> If true, the query property will always be set to an object returned by the querystring module's parse() method. If false, the query property on the returned URL object will be an unparsed, undecoded string. Default: false.
+      const { listName } = query;
+      if (listName in list) {
+        sendResponse(res, list[listName], 200);
+      } else {
+        sendResponse(res, "List not found", 404);
+      }
     },
     POST: (req, res) => {
-      console.log("IN POST");
+      parseData(req, data => {
+        const { todo, listName } = data;
+        list[listName].push(todo);
+        sendResponse(res, null, 201);
+      });
     },
     DELETE: (req, res) => {
-      console.log("IN DELETE");
+      const query = url.parse(req.url, true).query;
+      const { index, listName } = query;
+      list[listName].splice(index, 1);
+      sendResponse(res, null, 202);
     }
   }
 };
